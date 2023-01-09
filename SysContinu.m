@@ -1,3 +1,5 @@
+clear all
+close all
 %Definition des valeurs
 %Moteur 
 Rm = 1;
@@ -12,7 +14,9 @@ FTm = tf(numm,denm)
 %FT = 2Ubat 
 Ubat = 24;
 %FT G
-FTg = tf(2*numm,denm)
+FTg = tf(2*Ubat*numm,denm)
+figure
+bode(FTg)
 %Bloc conditonnement 
 R5 = 5100;
 R8 = 10000;
@@ -28,18 +32,31 @@ tau2 = R21 * C7;
 %FT F
 numf = [Kfiltre];
 denf = [tau1*tau2 tau1+tau2 1];
-FTf = tf(numm,denm)
+FTf = tf(numf,denf)
 %Capteur 
 Kcap = 0.104 
 %FT cap +cond 
-FTboucle = tf(Kcap*numm,denm)
+FTretour = tf(Kcap*numf,denf)
 %%%%%%%bode pour FTBO pas correcteur 
-FTBO = FTg*FTboucle
+FTBO = FTg*FTretour
+figure
 bode(FTBO);
-%%%%%% Ajouter correcteur de proportionnelle
-Kp = 3 
-FTBOcp = Kp*FTBO;
-bode(FTBFcp)
+%%%%%% Ajouter correcteur PI
+Kp = 3;
+numC = Kp*[Taum  1]
+denC = [9.92e-3 0]
+C =  tf(numC,denC)
+FTBOc = C*FTBO;
+figure
+bode(FTBOc)
+%Simulation en continu
+Te = 2e-4;
+out = sim('sim_SysContinu')
+figure
+plot(out.resBF)
+%Asservissement dans le domaine discret
+C_discret = c2d(C,Te)
+
 
 
 
