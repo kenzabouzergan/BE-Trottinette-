@@ -56,11 +56,7 @@ plot(out.resBF)
 %Asservissement dans le domaine discret
 C_discret = c2d(C,Te,'tustin')
 %Partie 2: L'asservissement de vitesse
-numV = [3.3];
-denV = [1 0];
-V = tf(numV,denV)
-figure 
-bode(V)
+V = 
 
 
 

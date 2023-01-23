@@ -46,21 +46,8 @@ lib : bibliothèque qui gère les périphériques du STM : Drivers_STM32F103_107
 #define Si 0.1040
 #define pi 3.147
 #define taui ((24*Km*Kfiltre*Si)/(pi*Ft))
-////////
-//#define tau_f (7.43e-5)
-//#define Kgf (48.0*2.2*(1e3/(5.1e3+10e3)))
-//#define ti (Kgf/(2.0*pi*Ft*sqrt(4.0*(pi*pi)*(Ft*Ft)*(tau_f*tau_f)+1.0)))
-//#define Kp (2e-3/ti)
-///////
-//#define taui 0.002
-#define phi_rad (0.3491)
 #define a0 1.0
-#define k ((L/R)/taui)
-#define T (1.0/((pi/phi_rad)*Ft))
-//#define b0 (-k + (T/(2.0*taui)))
-//#define b1 (k + (T/(2.0*taui)))
-//#define b0 -0.5443
-//#define b1 0.6047
+
 // Choix de la fréquence PWM (en kHz)
 #define FPWM_Khz 20.0
 						
@@ -104,7 +91,6 @@ Conf_Generale_IO_Carte();
 
 	
 // ------------- Discret, choix de Te -------------------	
-//Te=	0.0002; // en seconde
 Te_us=Te*1000000.0; // conversion en µs pour utilisation dans la fonction d'init d'interruption
 	
 
@@ -143,10 +129,6 @@ LED_Codeur_Off;
 //=================================================================================================================
 // 					FONCTION D'INTERRUPTION PRINCIPALE SYSTICK
 //=================================================================================================================
-//int Courant_1,Cons_In, IN1, IN3V3;
-//float erreur, alpha, erreur1 = 0, alpha1 = 0,
-//a0 = 0.6048/0.5444, a1 = 1/0.5444, a2 = (-1)/0.5444;
-
 void IT_Principale(void)
 {
  erreur = (float)( Entree_3V3() - I1());
