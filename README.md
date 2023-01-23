@@ -1,5 +1,5 @@
 # BE-Trottinette- 
-Kenza Bouzergan Trung Kien Tran
+Kenza Bouzergan Kien Trung Tran
 
 Voici notre github pour vous tenir au courant de l'avancement de notre BE trottinette. 
 
